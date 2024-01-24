@@ -1,5 +1,6 @@
 package com.git.domain.member;
 
+import com.git.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +9,7 @@ import static jakarta.persistence.EnumType.STRING;
 
 @Entity
 @Getter
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "member_id")
