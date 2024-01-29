@@ -37,4 +37,36 @@ public class Member extends BaseTimeEntity {
 
     protected Member() {
     }
+
+    public void changePassword(String password) {
+        this.password = password;
+    }
+
+    public void update(String phoneNum, String email, Address address) {
+        this.phoneNum = phoneNum;
+        this.email = email;
+        this.address = address;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
