@@ -3,6 +3,10 @@ package com.git.config;
 import com.git.jwt.JwtAccessDeniedHandler;
 import com.git.jwt.JwtAuthenticationEntryPoint;
 import com.git.jwt.JwtTokenProvider;
+import com.git.oauth.handler.OAuth2LoginFailureHandler;
+import com.git.oauth.handler.OAuth2LoginSuccessHandler;
+import com.git.repository.member.MemberRepository;
+import com.git.service.oauth.CustomOAuth2UserService;
 import com.git.service.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +30,7 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisService redisService;
+    private final MemberRepository memberRepository;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -43,6 +48,11 @@ public class SecurityConfig {
                     auth.requestMatchers("/auth/login").permitAll();
                     auth.requestMatchers("/").permitAll();
                     auth.anyRequest().permitAll();
+                })
+                .oauth2Login(oauth -> {
+                    oauth.successHandler(new OAuth2LoginSuccessHandler(memberRepository, jwtTokenProvider, redisService));
+                    oauth.failureHandler(new OAuth2LoginFailureHandler());
+                    oauth.userInfoEndpoint(config -> config.userService(new CustomOAuth2UserService(memberRepository)));
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
