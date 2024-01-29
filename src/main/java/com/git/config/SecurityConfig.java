@@ -42,7 +42,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/auth/save").permitAll();
                     auth.requestMatchers("/auth/login").permitAll();
                     auth.requestMatchers("/").permitAll();
-                    auth.anyRequest().authenticated();
+                    auth.anyRequest().permitAll();
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
