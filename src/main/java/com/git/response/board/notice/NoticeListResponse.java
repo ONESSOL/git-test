@@ -1,6 +1,6 @@
-package com.git.response.board;
+package com.git.response.board.notice;
 
-import com.git.domain.board.Notice;
+import com.git.domain.board.notice.Notice;
 import lombok.Getter;
 import lombok.Setter;
 

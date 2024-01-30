@@ -1,7 +1,7 @@
-package com.git.response.board;
+package com.git.response.board.notice;
 
-import com.git.domain.board.BoardFileEntity;
-import com.git.domain.board.Notice;
+import com.git.domain.board.notice.NoticeFileEntity;
+import com.git.domain.board.notice.Notice;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-public class NoticeUpdateResponse {
+public class NoticeDetailResponse {
 
     private Long id;
     private String title;
@@ -23,8 +23,8 @@ public class NoticeUpdateResponse {
     private List<String> originalFileNames;
     private List<String> storedFileNames;
 
-    public static NoticeUpdateResponse toSave(Notice notice) {
-        NoticeUpdateResponse response = new NoticeUpdateResponse();
+    public static NoticeDetailResponse toSave(Notice notice) {
+        NoticeDetailResponse response = new NoticeDetailResponse();
         response.setId(notice.getId());
         response.setTitle(notice.getTitle());
         response.setContents(notice.getContents());
@@ -38,9 +38,9 @@ public class NoticeUpdateResponse {
             response.setFileAttached(1);
             List<String> originalFileNameList = new ArrayList<>();
             List<String> storedFileNameList = new ArrayList<>();
-            for(BoardFileEntity boardFileEntity : notice.getBoardFileEntities()) {
-                originalFileNameList.add(boardFileEntity.getOriginalFileName());
-                storedFileNameList.add(boardFileEntity.getStoredFileName());
+            for(NoticeFileEntity noticeFileEntity : notice.getBoardFileEntities()) {
+                originalFileNameList.add(noticeFileEntity.getOriginalFileName());
+                storedFileNameList.add(noticeFileEntity.getStoredFileName());
             }
             response.setOriginalFileNames(originalFileNameList);
             response.setStoredFileNames(storedFileNameList);
@@ -48,6 +48,12 @@ public class NoticeUpdateResponse {
         return response;
     }
 }
+
+
+
+
+
+
 
 
 

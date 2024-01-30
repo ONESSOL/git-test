@@ -31,7 +31,7 @@ public class JwtFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
-        if(StringUtils.hasText(token) && jwtTokenProvider.validateExpiredToken(token)) {
+        if(StringUtils.hasText(token) && !jwtTokenProvider.validateExpiredToken(token)) {
             String subject = jwtTokenProvider.extractSubject(token);
             String redisRefreshToken = redisService.getValues(subject);
             if(redisService.checkValues(redisRefreshToken)) {

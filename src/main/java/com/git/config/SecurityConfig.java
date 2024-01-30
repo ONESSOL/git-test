@@ -36,7 +36,8 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring()
                 .requestMatchers("/favicon.ico")
-                .requestMatchers("/error");
+                .requestMatchers("/error")
+                .requestMatchers("/index.html");
     }
 
     @Bean
@@ -46,8 +47,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/save").permitAll();
                     auth.requestMatchers("/auth/login").permitAll();
+                    auth.requestMatchers("/oauth2/save").permitAll();
                     auth.requestMatchers("/").permitAll();
-                    auth.anyRequest().permitAll();
+                    auth.anyRequest().authenticated();
                 })
                 .oauth2Login(oauth -> {
                     oauth.successHandler(new OAuth2LoginSuccessHandler(memberRepository, jwtTokenProvider, redisService));

@@ -1,7 +1,6 @@
 package com.git.repository.board.notice;
 
-import com.git.domain.board.Notice;
-import com.git.domain.board.QNotice;
+import com.git.domain.board.notice.Notice;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,7 +12,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-import static com.git.domain.board.QNotice.notice;
+import static com.git.domain.board.notice.QNotice.notice;
 
 public class NoticeRepositoryImpl implements NoticeRepositoryCustom {
 

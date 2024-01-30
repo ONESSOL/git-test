@@ -1,10 +1,15 @@
 package com.git.domain.member;
 
 import com.git.domain.BaseTimeEntity;
+import com.git.domain.board.review.Review;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.EnumType.STRING;
 
 @Entity
@@ -26,6 +31,8 @@ public class Member extends BaseTimeEntity {
     @Enumerated(STRING)
     private SocialType socialType;
     private String socialId;
+    @OneToMany(mappedBy = "member", cascade = REMOVE, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
     @Builder
     public Member(String username, String password, String name, String phoneNum, String email, Address address, Role role, SocialType socialType, String socialId) {
@@ -41,6 +48,10 @@ public class Member extends BaseTimeEntity {
     }
 
     protected Member() {
+    }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
     }
 
     public void changePassword(String password) {

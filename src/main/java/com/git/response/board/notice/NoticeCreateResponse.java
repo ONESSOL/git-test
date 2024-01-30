@@ -1,7 +1,7 @@
-package com.git.response.board;
+package com.git.response.board.notice;
 
-import com.git.domain.board.BoardFileEntity;
-import com.git.domain.board.Notice;
+import com.git.domain.board.notice.NoticeFileEntity;
+import com.git.domain.board.notice.Notice;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,9 +39,9 @@ public class NoticeCreateResponse {
             response.setFileAttached(notice.getFileAttached());
             List<String> originalFileNameList = new ArrayList<>();
             List<String> storedFileNameList = new ArrayList<>();
-            for(BoardFileEntity boardFileEntity : notice.getBoardFileEntities()) {
-                originalFileNameList.add(boardFileEntity.getOriginalFileName());
-                storedFileNameList.add(boardFileEntity.getStoredFileName());
+            for(NoticeFileEntity noticeFileEntity : notice.getBoardFileEntities()) {
+                originalFileNameList.add(noticeFileEntity.getOriginalFileName());
+                storedFileNameList.add(noticeFileEntity.getStoredFileName());
             }
             response.setOriginalFileNames(originalFileNameList);
             response.setStoredFileNames(storedFileNameList);

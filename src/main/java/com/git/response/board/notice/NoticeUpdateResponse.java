@@ -1,17 +1,16 @@
-package com.git.response.board;
+package com.git.response.board.notice;
 
-import com.git.domain.board.BoardFileEntity;
-import com.git.domain.board.Notice;
+import com.git.domain.board.notice.NoticeFileEntity;
+import com.git.domain.board.notice.Notice;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-public class NoticeDetailResponse {
+public class NoticeUpdateResponse {
 
     private Long id;
     private String title;
@@ -24,8 +23,8 @@ public class NoticeDetailResponse {
     private List<String> originalFileNames;
     private List<String> storedFileNames;
 
-    public static NoticeDetailResponse toSave(Notice notice) {
-        NoticeDetailResponse response = new NoticeDetailResponse();
+    public static NoticeUpdateResponse toSave(Notice notice) {
+        NoticeUpdateResponse response = new NoticeUpdateResponse();
         response.setId(notice.getId());
         response.setTitle(notice.getTitle());
         response.setContents(notice.getContents());
@@ -39,9 +38,9 @@ public class NoticeDetailResponse {
             response.setFileAttached(1);
             List<String> originalFileNameList = new ArrayList<>();
             List<String> storedFileNameList = new ArrayList<>();
-            for(BoardFileEntity boardFileEntity : notice.getBoardFileEntities()) {
-                originalFileNameList.add(boardFileEntity.getOriginalFileName());
-                storedFileNameList.add(boardFileEntity.getStoredFileName());
+            for(NoticeFileEntity noticeFileEntity : notice.getBoardFileEntities()) {
+                originalFileNameList.add(noticeFileEntity.getOriginalFileName());
+                storedFileNameList.add(noticeFileEntity.getStoredFileName());
             }
             response.setOriginalFileNames(originalFileNameList);
             response.setStoredFileNames(storedFileNameList);
@@ -49,12 +48,6 @@ public class NoticeDetailResponse {
         return response;
     }
 }
-
-
-
-
-
-
 
 
 

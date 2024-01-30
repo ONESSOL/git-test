@@ -1,16 +1,16 @@
 package com.git.service.board;
 
-import com.git.domain.board.BoardFileEntity;
-import com.git.domain.board.Notice;
+import com.git.domain.board.notice.NoticeFileEntity;
+import com.git.domain.board.notice.Notice;
 import com.git.exception.board.BoardNotFoundException;
 import com.git.repository.board.notice.NoticeFileRepository;
 import com.git.repository.board.notice.NoticeRepository;
-import com.git.request.board.NoticeCreateRequest;
-import com.git.request.board.NoticeUpdateRequest;
-import com.git.response.board.NoticeCreateResponse;
-import com.git.response.board.NoticeDetailResponse;
-import com.git.response.board.NoticeListResponse;
-import com.git.response.board.NoticeUpdateResponse;
+import com.git.request.board.notice.NoticeCreateRequest;
+import com.git.request.board.notice.NoticeUpdateRequest;
+import com.git.response.board.notice.NoticeCreateResponse;
+import com.git.response.board.notice.NoticeDetailResponse;
+import com.git.response.board.notice.NoticeListResponse;
+import com.git.response.board.notice.NoticeUpdateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -61,7 +61,7 @@ public class NoticeService {
                 }
                 boardFile.transferTo(file);
                 noticeFileRepository.save(
-                        BoardFileEntity.builder()
+                        NoticeFileEntity.builder()
                                 .originalFileName(originalFileName)
                                 .storedFileName(storedFileName)
                                 .notice(notice)
@@ -114,7 +114,7 @@ public class NoticeService {
                         file.mkdirs();
                     }
                     boardFile.transferTo(file);
-                    noticeFileRepository.save(BoardFileEntity.builder()
+                    noticeFileRepository.save(NoticeFileEntity.builder()
                             .originalFileName(originalFileName)
                             .storedFileName(storedFileName)
                             .notice(notice)
@@ -124,15 +124,15 @@ public class NoticeService {
         } else {
             if (request.getBoardFiles().get(0).isEmpty()) {
                 request.setFileAttached(0);
-                for (BoardFileEntity boardFileEntity : notice.getBoardFileEntities()) {
-                    deleteFile(boardFileEntity);
+                for (NoticeFileEntity noticeFileEntity : notice.getBoardFileEntities()) {
+                    deleteFile(noticeFileEntity);
                 }
                 notice.getBoardFileEntities().removeAll(notice.getBoardFileEntities());
                 notice.update(request.getTitle(), request.getContents(), request.getFileAttached());
             } else {
                 request.setFileAttached(1);
-                for (BoardFileEntity boardFileEntity : notice.getBoardFileEntities()) {
-                    deleteFile(boardFileEntity);
+                for (NoticeFileEntity noticeFileEntity : notice.getBoardFileEntities()) {
+                    deleteFile(noticeFileEntity);
                 }
                 notice.getBoardFileEntities().removeAll(notice.getBoardFileEntities());
                 for (MultipartFile boardFile : request.getBoardFiles()) {
@@ -144,7 +144,7 @@ public class NoticeService {
                         file.mkdirs();
                     }
                     boardFile.transferTo(file);
-                    noticeFileRepository.save(BoardFileEntity.builder()
+                    noticeFileRepository.save(NoticeFileEntity.builder()
                             .originalFileName(originalFileName)
                             .storedFileName(storedFileName)
                             .notice(notice)
@@ -160,15 +160,15 @@ public class NoticeService {
     public void delete(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(BoardNotFoundException::new);
         if(notice.getFileAttached() == 1) {
-            for (BoardFileEntity boardFileEntity : notice.getBoardFileEntities()) {
-                deleteFile(boardFileEntity);
+            for (NoticeFileEntity noticeFileEntity : notice.getBoardFileEntities()) {
+                deleteFile(noticeFileEntity);
             }
         }
         noticeRepository.deleteById(noticeId);
     }
 
-    private void deleteFile(BoardFileEntity boardFileEntity) {
-        noticeFileRepository.delete(boardFileEntity);
+    private void deleteFile(NoticeFileEntity noticeFileEntity) {
+        noticeFileRepository.delete(noticeFileEntity);
     }
 }
 

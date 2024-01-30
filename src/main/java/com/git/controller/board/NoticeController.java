@@ -1,11 +1,11 @@
 package com.git.controller.board;
 
-import com.git.request.board.NoticeCreateRequest;
-import com.git.request.board.NoticeUpdateRequest;
-import com.git.response.board.NoticeCreateResponse;
-import com.git.response.board.NoticeDetailResponse;
-import com.git.response.board.NoticeListResponse;
-import com.git.response.board.NoticeUpdateResponse;
+import com.git.request.board.notice.NoticeCreateRequest;
+import com.git.request.board.notice.NoticeUpdateRequest;
+import com.git.response.board.notice.NoticeCreateResponse;
+import com.git.response.board.notice.NoticeDetailResponse;
+import com.git.response.board.notice.NoticeListResponse;
+import com.git.response.board.notice.NoticeUpdateResponse;
 import com.git.service.board.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
