@@ -23,6 +23,7 @@ public class Review extends BaseEntity {
     private String title;
     private String contents;
     private int fileAttached;
+    private int hits;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -34,6 +35,7 @@ public class Review extends BaseEntity {
         this.title = title;
         this.contents = contents;
         this.fileAttached = fileAttached;
+        this.hits = 0;
         createMember(member);
     }
 
@@ -48,4 +50,49 @@ public class Review extends BaseEntity {
     public void addBoardFile(ReviewFileEntity reviewFileEntity) {
         this.boardFileEntities.add(reviewFileEntity);
     }
+
+    public void update(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

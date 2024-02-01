@@ -42,7 +42,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
                 redisService.setValues(subject, refreshToken, Duration.ofMillis(AuthTokenGenerator.REFRESH_TOKEN_EXPIRE_TIME));
                 jwtTokenProvider.accessTokenSetHeaders(accessToken, response);
-                response.sendRedirect("/oauth2/save");
+                response.sendRedirect("/");
             } else {
                 loginSuccess(response, authentication);
             }
