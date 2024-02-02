@@ -3,7 +3,6 @@ package com.git.service.item;
 import com.git.domain.item.Item;
 import com.git.domain.item.ItemCode;
 import com.git.domain.item.ItemCondition;
-import com.git.dto.item.ItemConditionDto;
 import com.git.exception.item.ItemNotFoundException;
 import com.git.repository.item.ItemConditionRepository;
 import com.git.repository.item.ItemRepository;
@@ -20,9 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Iterator;
-import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
@@ -86,6 +83,11 @@ public class ItemService {
         }
         item.update(request.getItemName(), request.getPrice());
         return ItemUpdateResponse.toSave(item);
+    }
+
+    @Transactional
+    public void deleteItem(@PathVariable Long itemId) {
+        itemRepository.deleteById(itemId);
     }
 }
 

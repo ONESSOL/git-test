@@ -48,6 +48,12 @@ public class ItemController {
     public ResponseEntity<ItemUpdateResponse> update(@PathVariable Long id, @RequestBody ItemUpdateRequest request) {
         return ResponseEntity.ok(itemService.update(id, request));
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+        itemService.deleteItem(id);
+        return ResponseEntity.ok().build();
+    }
 }
 
 
