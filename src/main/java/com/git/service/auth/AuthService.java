@@ -1,11 +1,13 @@
 package com.git.service.auth;
 
 import com.git.config.SecurityUtil;
+import com.git.domain.cart.Cart;
 import com.git.domain.member.Member;
 import com.git.domain.member.Role;
 import com.git.exception.member.UsernameExistException;
 import com.git.jwt.AuthTokenGenerator;
 import com.git.jwt.AuthTokens;
+import com.git.repository.cart.CartRepository;
 import com.git.repository.member.MemberRepository;
 import com.git.request.member.LoginRequest;
 import com.git.request.member.MemberCreateRequest;
@@ -33,6 +35,7 @@ public class AuthService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final AuthTokenGenerator authTokenGenerator;
     private final RedisService redisService;
+    private final CartRepository cartRepository;
 
     @Transactional
     public MemberCreateResponse saveMember(MemberCreateRequest request) {
@@ -51,6 +54,7 @@ public class AuthService {
                 .email(request.getEmail())
                 .address(request.getAddress())
                 .role(USER)
+                .cart(cartRepository.save(Cart.createCart()))
                 .build());
         return MemberCreateResponse.toSave(member);
     }
@@ -71,7 +75,7 @@ public class AuthService {
     @Transactional
     public void logout(String accessToken, String refreshToken) {
 
-        if(redisService.checkValues(refreshToken)) {
+        if (redisService.checkValues(refreshToken)) {
             redisService.deleteValues(String.valueOf(SecurityUtil.currentMemberId()));
             redisService.setValues(accessToken, "logout", Duration.ofMillis(AuthTokenGenerator.ACCESS_TOKEN_EXPIRE_TIME));
         }

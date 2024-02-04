@@ -1,5 +1,6 @@
 package com.git.oauth;
 
+import com.git.domain.cart.Cart;
 import com.git.domain.member.Member;
 import com.git.domain.member.Role;
 import com.git.domain.member.SocialType;
@@ -49,6 +50,7 @@ public class OAuthAttributes {
                 .username(oauth2UserInfo.getNickName())
                 .role(GUEST)
                 .email(oauth2UserInfo.getEmail())
+                .cart(Cart.createCart())
                 .build();
     }
 }
